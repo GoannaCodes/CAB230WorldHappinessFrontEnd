@@ -11,6 +11,14 @@ html, body{
   font-size: 16px;
 }
 
+/* aligns components to center of page */
+.content{
+  text-align: center;
+}
+
+/* ====================================== */
+/* Styling header containing Navbar items */
+/* ====================================== */
 header{
   display:flex;
   justify-content: space-between;
