@@ -8,9 +8,9 @@ const Navbar = () =>{
                 {/* main endpoints */}
                 <ul>
                     <li id="logo">
-                        <Link to="/home"><img src="icons/happy-logo.png" alt="Home-logo"></img></Link>
+                        <Link to="/home"><img src="icons/happy-logo-full.png" alt="Home-logo"></img></Link>
                     </li>
-                    <li>]
+                    <li>
                         <Link to="/rankings" className="NavItems">Rankings</Link>
                     </li>
                     <li>
@@ -19,7 +19,7 @@ const Navbar = () =>{
                 </ul>
 
                 {/* Authentication endpoints */}
-                <Link to={"/register"}>
+                {/* <Link to={"/register"}>
                     <Button variant="contained" color="primary"id="registerButton">Register</Button>
                 </Link>
                 <Link to={"/login"}>
@@ -27,7 +27,7 @@ const Navbar = () =>{
                 </Link>
                 <Link to={"/logout"}>
                     <Button variant="contained" color="secondary" id="logoutButton">Logout</Button>
-                </Link>
+                </Link> */}
             </nav>
         </header>
     )
