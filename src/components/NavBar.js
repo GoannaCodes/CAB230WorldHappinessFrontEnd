@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from "react-router-dom";
+import {Button} from "@material-ui/core";
 
 const Navbar = () =>{
     return(
@@ -19,7 +20,7 @@ const Navbar = () =>{
                 </ul>
 
                 {/* Authentication endpoints */}
-                {/* <Link to={"/register"}>
+                <Link to={"/register"}>
                     <Button variant="contained" color="primary"id="registerButton">Register</Button>
                 </Link>
                 <Link to={"/login"}>
@@ -27,7 +28,7 @@ const Navbar = () =>{
                 </Link>
                 <Link to={"/logout"}>
                     <Button variant="contained" color="secondary" id="logoutButton">Logout</Button>
-                </Link> */}
+                </Link>
             </nav>
         </header>
     )
