@@ -65,7 +65,7 @@ export function Records(){
 
     const countryList = GetCountryNames();
     useEffect(()=>{
-        let url=`http://131.181.190.87:3000/ranking?year=${selectedYear}&?country=${selectedCountry}`;
+        let url=`http://131.181.190.87:3000/rankings?year=${selectedYear}&country=${selectedCountry}`;
         
         fetch(url)
         .then(res=>res.json())
@@ -86,14 +86,14 @@ export function Records(){
     return(
         <div>
             <div>
-                <h1>Ranking Records</h1>
                 <Grid align="center">
+                    <h1>Ranking Records</h1>
                     <YearSelection onInputChange={setSelectedYear}/>
-                    {countryList.map((value, index)=>{
+                    {/* {countryList.map((value, index)=>{
                         return(
                             <p key={index}>{value}</p>
                         )
-                    })}
+                    })} */}
                 </Grid>
             </div>
             <div className="ag-theme-balham" style={tableStyles}>
@@ -104,7 +104,6 @@ export function Records(){
                     pagination={true}
                     paginationPageSize={20}
                 />
-                <p>{countryList}</p>
             </div>
         </div>
     )
