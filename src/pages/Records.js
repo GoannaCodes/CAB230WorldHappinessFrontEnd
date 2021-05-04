@@ -23,9 +23,12 @@ const tableStyles = {
 
 function GetCountryNames(){
     const [countryList, setCountryList] = useState([]);
-    fetch("http://131.181.190.87:3000/countries")
+    useEffect(()=>{
+        fetch("http://131.181.190.87:3000/countries")
         .then((res)=>res.json())
         .then((data)=> setCountryList(data))
+    }, [])
+    
     return countryList;
 }
 
