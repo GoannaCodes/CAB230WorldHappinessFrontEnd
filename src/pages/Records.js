@@ -21,6 +21,31 @@ const tableStyles = {
     marginTop: "15px"
 }
 
+function YearSelection(props){
+    const [year, setYear] = useState("");
+    return(
+        <Autocomplete
+        onInputChange={(event, value)=>{
+            if (value.length === 4){
+                setYear(value);
+                props.onInputChange(value);
+            }
+            if (value === "All" || value === ""){
+                setYear("");
+                props.onInputChange("");
+            }
+            
+        }}
+        options = {yearOptions}
+        getOptionLabel={(option)=>option.toString()}
+        getOptionSelected={(option, value)=> option === value}
+        style={{width: 300}}
+        renderInput={(params)=>(
+            <TextField {...params} label="Filter by year" variant="outlined"/>
+        )}
+        />
+    )
+}
 
 export function Records(){
     const [selectedYear, setSelectedYear] = useState("");
@@ -58,26 +83,7 @@ export function Records(){
             <div>
                 <h1>Ranking Records</h1>
                 <Grid align="center">
-                    {/* <YearSelection onInputChange={setSelectedYear}/> */}
-                    <Autocomplete
-                            className="year-selection"
-                            onInputChange = {(event, value)=>{
-                                // only change if 4 characters have been inputted
-                                if (value.length === 4){
-                                    setSelectedYear(value);
-                                }
-                                if (value === "All" || value===""){
-                                    setSelectedYear("");
-                                }
-                            }}
-                            options={yearOptions}
-                            getOptionLabel={(option)=>option.toString()}
-                            getOptionSelected={(option, value) => option === value}
-                            style={{ width: 300 }}
-                            renderInput={(params) => (
-                                <TextField {...params} label="Filter records by year" variant="outlined" />
-                            )}
-                        />
+                    <YearSelection onInputChange={setSelectedYear}/>
                 </Grid>
             </div>
             <div className="ag-theme-balham" style={tableStyles}>
