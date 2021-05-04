@@ -91,12 +91,25 @@ export function Records(){
             <div>
                 <Grid align="center">
                     <h1>Ranking Records</h1>
+                    {/* Tested typing in "2014" and "2021" = table shows no data to display */}
+                    {/* Tested typing in "2018" and "2019" = table successfully updates content*/}
+                    {/* Clicking away from textfield before submitting resets the table */}
                     <YearSelection onInputChange={setSelectedYear}/>
                     {/* {countryList.map((value, index)=>{
                         return(
                             <p key={index}>{value}</p>
                         )
                     })} */}
+
+                    <Autocomplete
+                        options={countryList}
+                        getOptionLabel={(option)=>option}
+                        style={{width: 300, marginTop: "15px"}}
+                        renderInput={(params)=>(
+                            <TextField {...params} value={selectedCountry} label="Filter by country" variant="outlined"/>
+                        )}
+                    />
+                    {/* just need to display country list as textfield autocomplete */}
                 </Grid>
             </div>
             <div className="ag-theme-balham" style={tableStyles}>
