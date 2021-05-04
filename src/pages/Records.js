@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {Select, MenuItem, Grid, TableContainer, TextField} from "@material-ui/core";
+import { Grid, TextField} from "@material-ui/core";
 import {Autocomplete} from '@material-ui/lab'
 import {AgGridReact} from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
@@ -21,42 +21,60 @@ const tableStyles = {
     marginTop: "15px"
 }
 
+function GetCountryNames(){
+    const [countryList, setCountryList] = useState([]);
+    useEffect(()=>{
+        fetch("http://131.181.198.87:3000/countries")
+            .then((res)=> res.json())
+            .then((data)=> {
+                console.log(data)
+                setCountryList(data)
+            })
+    }, [])
+    return countryList;
+}
+
+
 function YearSelection(props){
     const [year, setYear] = useState("");
     return(
         <Autocomplete
-        onInputChange={(event, value)=>{
-            if (value.length === 4){
-                setYear(value);
-                props.onInputChange(value);
-            }
-            if (value === "All" || value === ""){
-                setYear("");
-                props.onInputChange("");
-            }
+            onInputChange={(event, value)=>{
+                if (value.length === 4){
+                    setYear(value);
+                    props.onInputChange(value);
+                }
+                if (value === "All" || value === ""){
+                    setYear("");
+                    props.onInputChange("");
+                }
             
-        }}
-        options = {yearOptions}
-        getOptionLabel={(option)=>option.toString()}
-        getOptionSelected={(option, value)=> option === value}
-        style={{width: 300}}
-        renderInput={(params)=>(
-            <TextField {...params} label="Filter by year" variant="outlined"/>
-        )}
+            }}
+            options = {yearOptions}
+            getOptionLabel={(option)=>option.toString()}
+            getOptionSelected={(option, value)=> option === value}
+            style={{width: 300}}
+            renderInput={(params)=>(
+                <TextField {...params} value={year} label="Filter by year" variant="outlined"/>
+            )}
         />
     )
 }
 
 export function Records(){
     const [selectedYear, setSelectedYear] = useState("");
+    const [selectedCountry, setSelectedCountry] = useState("");
     const [rowData, setRowData] = useState("");
     const [error, setError] = useState("");
     const [hasError, setHasError] = useState("false");
 
+    const countryList = GetCountryNames();
     useEffect(()=>{
         let url=`http://131.181.190.87:3000/rankings`;
         if(selectedYear!== ""){
             url+= `?year=${selectedYear}`
+        }else if (selectedCountry !== ""){
+            url+=`?country=${selectedCountry}`
             // set it back to normal
         }else if (selectedYear === "All" || selectedYear === ""){
             url=`http://131.181.190.87:3000/rankings`
@@ -84,6 +102,7 @@ export function Records(){
                 <h1>Ranking Records</h1>
                 <Grid align="center">
                     <YearSelection onInputChange={setSelectedYear}/>
+                    
                 </Grid>
             </div>
             <div className="ag-theme-balham" style={tableStyles}>
@@ -94,6 +113,7 @@ export function Records(){
                     pagination={true}
                     paginationPageSize={20}
                 />
+                <p>{countryList}</p>
             </div>
         </div>
     )
