@@ -23,14 +23,9 @@ const tableStyles = {
 
 function GetCountryNames(){
     const [countryList, setCountryList] = useState([]);
-    useEffect(()=>{
-        fetch("http://131.181.198.87:3000/countries")
-            .then((res)=> res.json())
-            .then((data)=> {
-                console.log(data)
-                setCountryList(data)
-            })
-    }, [])
+    fetch("http://131.181.190.87:3000/countries")
+        .then((res)=>res.json())
+        .then((data)=> setCountryList(data))
     return countryList;
 }
 
@@ -70,16 +65,8 @@ export function Records(){
 
     const countryList = GetCountryNames();
     useEffect(()=>{
-        let url=`http://131.181.190.87:3000/rankings`;
-        if(selectedYear!== ""){
-            url+= `?year=${selectedYear}`
-        }else if (selectedCountry !== ""){
-            url+=`?country=${selectedCountry}`
-            // set it back to normal
-        }else if (selectedYear === "All" || selectedYear === ""){
-            url=`http://131.181.190.87:3000/rankings`
-        }
-
+        let url=`http://131.181.190.87:3000/ranking?year=${selectedYear}&?country=${selectedCountry}`;
+        
         fetch(url)
         .then(res=>res.json())
         .catch(err=>{
@@ -102,7 +89,11 @@ export function Records(){
                 <h1>Ranking Records</h1>
                 <Grid align="center">
                     <YearSelection onInputChange={setSelectedYear}/>
-                    
+                    {countryList.map((value, index)=>{
+                        return(
+                            <p key={index}>{value}</p>
+                        )
+                    })}
                 </Grid>
             </div>
             <div className="ag-theme-balham" style={tableStyles}>
