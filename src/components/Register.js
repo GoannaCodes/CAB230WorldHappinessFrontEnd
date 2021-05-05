@@ -8,7 +8,7 @@ export const paperStyle={
     margin: "30px auto"
 }
 
-function Email(props){
+export function Email(props){
     const[innerEmail, setInnerEmail] = useState("");
     return(
         <TextField 
@@ -24,7 +24,7 @@ function Email(props){
     )
 }
 
-function Password(props){
+export function Password(props){
     const[innerPassword, setInnerPassword] = useState("");
     return(
         <TextField 
@@ -58,7 +58,6 @@ export function Register(){
         .then(res=> res.json())
         // obtain response message
         .then(res => setMessage(res.message))
-        .catch(()=> alert("There was an error, please try again"))
     }
     return(
         <Grid>
