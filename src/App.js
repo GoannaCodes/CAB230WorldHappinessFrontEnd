@@ -1,11 +1,11 @@
 import './App.css';
 import React from "react";
-import {Switch, BrowserRouter as Router, Route} from "react-router-dom";
+import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 
 import Home from "./pages/Home";
 import {Records} from "./pages/Records";
 import Factors from "./pages/Factors";
-import Register from "./components/Register";
+import {Register} from "./components/Register";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
 import Navbar from "./components/NavBar";
