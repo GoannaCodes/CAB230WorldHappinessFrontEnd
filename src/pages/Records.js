@@ -17,8 +17,9 @@ const columns = [
 const tableStyles = {
     height:"635px",
     width: "700px",
-    paddingLeft: "34.7%", 
-    marginTop: "15px"
+    paddingLeft: "31%", 
+    marginTop: "15px",
+    marginBottom: "20px"
 }
 
 function GetCountryNames(){
@@ -32,7 +33,7 @@ function GetCountryNames(){
 }
 
 
-function YearSelection(props){
+export function YearSelection(props){
     const [year, setYear] = useState("");
     return(
         <Autocomplete
@@ -50,7 +51,7 @@ function YearSelection(props){
             options = {yearOptions}
             getOptionLabel={(option)=>option.toString()}
             getOptionSelected={(option, value)=> option === value}
-            style={{width: 300}}
+            style={{width: 300, display: "inline-block", marginRight: 50}}
             renderInput={(params)=>(
                 <TextField {...params} value={year} label="Filter by year" variant="outlined"/>
             )}
@@ -58,7 +59,7 @@ function YearSelection(props){
     )
 }
 
-function CountrySelection(props){
+export function CountrySelection(props){
     // stores country query
     const [country, setCountry]=useState("");
     const countryList = GetCountryNames();
@@ -75,7 +76,7 @@ function CountrySelection(props){
                 props.onInputChange(value);
             }
         }}
-        style={{width: 300, marginTop: "15px"}}
+        style={{width: 300, display: "inline-block", marginRight: 20}}
         renderInput={(params)=>(
             <TextField {...params} value={country} label="Filter by country" variant="outlined"/>
         )}
@@ -89,16 +90,9 @@ export function Records(){
     const [error, setError] = useState("");
     const [hasError, setHasError] = useState("false");
 
-  
-    useEffect(()=>{
-        let url=`http://131.181.190.87:3000/rankings?year=${selectedYear}&country=${selectedCountry}`;
-        
-        fetch(url)
+    useEffect(()=>{       
+        fetch(`http://131.181.190.87:3000/rankings?year=${selectedYear}&country=${selectedCountry}`)
         .then(res=>res.json())
-        .catch(err=>{
-            setHasError(true)
-            setError(err.message);
-        })
         .then(data=>data.map(records=>{
             return{
                 rank: records.rank,
@@ -107,6 +101,10 @@ export function Records(){
                 year: records.year
             }
         }))
+        .catch(err=>{
+            setHasError(true)
+            setError(err.message);
+        })
         .then(rankings => setRowData(rankings))
     })
     return(
@@ -114,13 +112,14 @@ export function Records(){
             <div>
                 <Grid align="center">
                     <h1>Ranking Records</h1>
+                    <p>The table below displays the world happiness rankings from 2015 - 2020.</p>
+                    <p>Feel free to filter the results by year and/or country: </p>
+                    {hasError && <div>{error}</div>}
                     {/* Tested typing in "2014" and "2021" = table shows no data to display */}
                     {/* Tested typing in "2018" and "2019" = table successfully updates content*/}
                     {/* Clicking away from textfield before submitting resets the table */}
                     <YearSelection onInputChange={setSelectedYear}/>
                     <CountrySelection onInputChange={setSelectedCountry}/>
-                   
-                    {/* just need to display country list as textfield autocomplete */}
                 </Grid>
             </div>
             <div className="ag-theme-balham" style={tableStyles}>
