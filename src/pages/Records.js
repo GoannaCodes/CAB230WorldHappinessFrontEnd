@@ -59,6 +59,22 @@ function YearSelection(props){
     )
 }
 
+function CountrySelection(props){
+    const [country, setCountry]=useState("");
+    const countryList = GetCountryNames();
+    return(
+        <Autocomplete
+        options={countryList}
+        getOptionLabel={(option)=>option}
+        getOptionSelected={(option, value)=> option===value}
+        // onInputChanged on material-ui page
+        style={{width: 300, marginTop: "15px"}}
+        renderInput={(params)=>(
+            <TextField {...params} value={country} label="Filter by country" variant="outlined"/>
+        )}
+    />
+    )
+}
 export function Records(){
     const [selectedYear, setSelectedYear] = useState("");
     const [selectedCountry, setSelectedCountry] = useState("");
@@ -66,7 +82,7 @@ export function Records(){
     const [error, setError] = useState("");
     const [hasError, setHasError] = useState("false");
 
-    const countryList = GetCountryNames();
+  
     useEffect(()=>{
         let url=`http://131.181.190.87:3000/rankings?year=${selectedYear}&country=${selectedCountry}`;
         
@@ -95,20 +111,8 @@ export function Records(){
                     {/* Tested typing in "2018" and "2019" = table successfully updates content*/}
                     {/* Clicking away from textfield before submitting resets the table */}
                     <YearSelection onInputChange={setSelectedYear}/>
-                    {/* {countryList.map((value, index)=>{
-                        return(
-                            <p key={index}>{value}</p>
-                        )
-                    })} */}
-
-                    <Autocomplete
-                        options={countryList}
-                        getOptionLabel={(option)=>option}
-                        style={{width: 300, marginTop: "15px"}}
-                        renderInput={(params)=>(
-                            <TextField {...params} value={selectedCountry} label="Filter by country" variant="outlined"/>
-                        )}
-                    />
+                    <CountrySelection/>
+                   
                     {/* just need to display country list as textfield autocomplete */}
                 </Grid>
             </div>
