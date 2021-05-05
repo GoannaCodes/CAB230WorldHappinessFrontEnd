@@ -28,7 +28,6 @@ function GetCountryNames(){
         .then((res)=>res.json())
         .then((data)=> setCountryList(data))
     }, [])
-    
     return countryList;
 }
 
@@ -60,14 +59,22 @@ function YearSelection(props){
 }
 
 function CountrySelection(props){
+    // stores country query
     const [country, setCountry]=useState("");
     const countryList = GetCountryNames();
     return(
         <Autocomplete
         options={countryList}
-        getOptionLabel={(option)=>option}
-        getOptionSelected={(option, value)=> option===value}
-        // onInputChanged on material-ui page
+        getOptionSelected={(option, value)=> option === value}
+        onInputChange={(event, value)=>{
+            if (value==="" || value === "undefined"){
+                setCountry("");
+                props.onInputChange("");
+            } else {
+                setCountry(value);
+                props.onInputChange(value);
+            }
+        }}
         style={{width: 300, marginTop: "15px"}}
         renderInput={(params)=>(
             <TextField {...params} value={country} label="Filter by country" variant="outlined"/>
@@ -111,7 +118,7 @@ export function Records(){
                     {/* Tested typing in "2018" and "2019" = table successfully updates content*/}
                     {/* Clicking away from textfield before submitting resets the table */}
                     <YearSelection onInputChange={setSelectedYear}/>
-                    <CountrySelection/>
+                    <CountrySelection onInputChange={setSelectedCountry}/>
                    
                     {/* just need to display country list as textfield autocomplete */}
                 </Grid>
