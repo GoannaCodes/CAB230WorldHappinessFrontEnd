@@ -43,6 +43,7 @@ function Password(props){
 export function Register(){
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
+    const [message, setMessage] = useState("");
     const handleSubmit = event =>{
         event.preventDefault();
 
@@ -55,7 +56,8 @@ export function Register(){
             body: JSON.stringify({email: `${email}`, password: `${pass}`})
         })
         .then(res=> res.json())
-        .then(res => console.log(res))
+        // obtain response message
+        .then(res => setMessage(res.message))
         .catch(()=> alert("There was an error, please try again"))
     }
     return(
@@ -71,6 +73,8 @@ export function Register(){
                         type="submit"
                         style={{marginTop: "15px" }}
                         color="primary">Create an account</Button>
+                        {/* Display response message to user */}
+                        <p>{message}</p>
                     </form>
                 </Grid>
             </Paper>
