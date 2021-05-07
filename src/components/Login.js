@@ -1,12 +1,13 @@
 import React, {useState} from "react";
 import {Email, Password, paperStyle} from "./Register";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import {Paper, Grid, Button} from "@material-ui/core";
 
 export default function Login(){
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
-    const [message, setMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+    const history = useHistory();
 
     const handleSubmit = event =>{
         event.preventDefault();
@@ -17,17 +18,19 @@ export default function Login(){
             Accept: "application/json"
         },
         body: JSON.stringify({email: `${email}`, password: `${pass}`})
-    }).then(res => res.json())
+    }).then(res => 
+        res.json())
     .then(res => {
         // if there is an error message, store it
         if (res.message){
-            setMessage(res.message)
+            setErrorMessage(res.message)
         } else {
             // store the token
             localStorage.setItem("token", res.token)
-            setMessage("You have successfully logged in!")
+            history.goBack() //redirect to previous page on successful login
         }
     })}
+  
 
     return(
         <Grid>
@@ -43,7 +46,7 @@ export default function Login(){
                         style={{marginTop: "15px", marginLeft: "24.8px"}}
                         color="primary">Login</Button>
                     </form>
-                    <p>{message}</p>
+                    <p>{errorMessage}</p>
                 </Grid>
             </Paper>
             <Paper elevation={10} style={paperStyle}>
