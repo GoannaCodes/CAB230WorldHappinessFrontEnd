@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import {CountrySelection, yearOptions} from "./Records";
-import {Grid, Select, MenuItem, InputLabel} from "@material-ui/core";
+import {Grid, Select, MenuItem} from "@material-ui/core";
 import {AgGridReact} from "ag-grid-react";
 
 import "ag-grid-community/dist/styles/ag-grid.css";
