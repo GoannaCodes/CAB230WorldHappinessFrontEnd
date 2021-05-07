@@ -5,7 +5,7 @@ import {AgGridReact} from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-balham.css";
 
-let yearOptions= ["All", "2015", "2016", "2017", "2018", "2019", "2020"]
+export const yearOptions= ["2015", "2016", "2017", "2018", "2019", "2020"]
 
 const columns = [
     {headerName: "Rank", field: "rank"}, 
@@ -32,7 +32,7 @@ function GetCountryNames(){
     return countryList;
 }
 
-
+// Allow user to input year with textfield that provides autosuggestion
 export function YearSelection(props){
     const [year, setYear] = useState("");
     return(
@@ -42,7 +42,7 @@ export function YearSelection(props){
                     setYear(value);
                     props.onInputChange(value);
                 }
-                if (value === "All" || value === ""){
+                if (value === ""){
                     setYear("");
                     props.onInputChange("");
                 }
@@ -51,7 +51,7 @@ export function YearSelection(props){
             options = {yearOptions}
             getOptionLabel={(option)=>option.toString()}
             getOptionSelected={(option, value)=> option === value}
-            style={{width: 300, display: "inline-block", marginRight: 50}}
+            style={{width: 300}}
             renderInput={(params)=>(
                 <TextField {...params} value={year} label="Filter by year" variant="outlined"/>
             )}
@@ -76,7 +76,7 @@ export function CountrySelection(props){
                 props.onInputChange(value);
             }
         }}
-        style={{width: 300, display: "inline-block", marginRight: 20}}
+        style={{width: 300}}
         renderInput={(params)=>(
             <TextField {...params} value={country} label="Filter by country" variant="outlined"/>
         )}
@@ -107,14 +107,24 @@ export function Records(){
         })
         .then(rankings => setRowData(rankings))
     })
+
+    // // generate a chart if only selectedCountry has been provided and there is no selectedyear
+    // if (selectedCountry!== "" && (selectedYear === "" || selectedYear === "All"){
+    //     <Line 
+    //         data ={{
+    //             labels: 
+    //         }}
+    //     />
+    // }
     return(
         <div>
-            <div>
-                <Grid align="center">
+            <div className="content">
                     <h1>Ranking Records</h1>
                     <p>The table below displays the world happiness rankings from 2015 - 2020.</p>
-                    <p>Feel free to filter the results by year and/or country: </p>
+                    <p>Feel free to filter the results by year and/or country using the text fields: </p>
                     {hasError && <div>{error}</div>}
+                <Grid align="center" style={{display:"flex", justifyContent: "center"}}>
+                    
                     {/* Tested typing in "2014" and "2021" = table shows no data to display */}
                     {/* Tested typing in "2018" and "2019" = table successfully updates content*/}
                     {/* Clicking away from textfield before submitting resets the table */}
