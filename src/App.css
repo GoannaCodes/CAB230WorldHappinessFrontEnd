@@ -77,3 +77,47 @@ nav ul li a {
   text-transform: uppercase;
   font-weight: 700;
 }
+
+/* ====================================== */
+/*           Nav Button styling           */
+/* ====================================== */
+#loginButton, #registerButton, #logoutButton{
+  text-transform: uppercase;
+  text-decoration: none;
+  position: absolute;
+  text-align: center;
+  font-size: 15px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  padding: 10px 10px 10px 10px;
+  border: 0;
+  transition-duration: 0.4s;
+  top: 3.2%;
+}
+
+#loginButton {
+  right: 150px;
+  color: white;
+  background: black;
+  margin-right: 20px;
+}
+
+#registerButton{
+  right: 260px;
+}
+
+#logoutButton{
+  right: 60px;
+}
+#loginButton:hover, #logoutButton:hover, #registerButton:hover {
+  text-decoration: underline;
+  color: #ffffff;
+}
+
+.NavItems:hover{
+  color: #4184ff;
+  text-decoration: underline;
+}
+
+
+
