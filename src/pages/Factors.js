@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Link} from "react-router-dom";
+import {Redirect} from "react-router-dom";
 import {yearOptions} from "./Records";
 import {Grid, Select, MenuItem} from "@material-ui/core";
 import {AgGridReact} from "ag-grid-react";
@@ -90,7 +90,7 @@ function UnauthenticatedContent(props){
     return(
         <div className="content">
             <h1>Factors</h1>
-            <p>You need to <Link to="/login">login</Link> to access this content</p>
+            <Redirect to="/login"/>
         </div>
     )
 }
