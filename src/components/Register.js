@@ -68,10 +68,11 @@ export function Register(){
                         <Email onChange={setEmail}/>
                         <Password onChange={setPass}/>
                         <Button
+                        id="register-button"
                         variant="contained"
                         type="submit"
                         style={{marginTop: "15px" }}
-                        color="primary">Create an account</Button>
+                        >Create an account</Button>
                         {/* Display response message to user */}
                         <p>{message}</p>
                     </form>

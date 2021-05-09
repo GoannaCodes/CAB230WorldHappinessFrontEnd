@@ -78,10 +78,16 @@ nav ul li a {
   font-weight: 700;
 }
 
+.NavItems:hover{
+  text-decoration: underline;
+  color: white;
+}
+
 /* ====================================== */
-/*           Nav Button styling           */
+/*              Nav Button &              */
+/*           Form Button Styling          */
 /* ====================================== */
-#loginButton, #registerButton, #logoutButton{
+#loginNav, #registerNav, #logoutButton{
   text-transform: uppercase;
   text-decoration: none;
   position: absolute;
@@ -93,31 +99,62 @@ nav ul li a {
   border: 0;
   transition-duration: 0.4s;
   top: 3.2%;
+  color: white;
 }
 
-#loginButton {
+#loginNav{
   right: 150px;
-  color: white;
-  background: black;
   margin-right: 20px;
 }
 
-#registerButton{
+#login-button{
+  margin-top: 15px;
+  margin-left: 24.8px;
+}
+
+#login-button, #loginNav{
+  font-weight: bold;
+  background: black;
+}
+
+#registerNav{
   right: 260px;
+}
+
+#registerNav, #register-button{
+  background: #2196F3;
+  color: white;
+  font-weight: bold;
+}
+
+#registerNav:hover, #register-button:hover, 
+#loginNav:hover, #login-button:hover, #logoutButton:hover{
+  background: #3F51B5;
+  text-decoration: underline;
+  color: white;
 }
 
 #logoutButton{
   right: 60px;
-}
-#loginButton:hover, #logoutButton:hover, #registerButton:hover {
-  text-decoration: underline;
-  color: #ffffff;
-}
-
-.NavItems:hover{
-  color: #4184ff;
-  text-decoration: underline;
+  background: white;
+  color: #000000;
 }
 
 
+.home-content{
+  width: 30vw;
+  margin: 1%;
+
+}
+
+.rank-logo{
+  width: 10%;
+}
+
+.home-container{
+  display:flex;
+  background-color: #eeeeee;
+  align-items: center;
+  justify-content: center;
+}
 

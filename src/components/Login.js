@@ -7,7 +7,6 @@ export default function Login(){
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
-    const history = useHistory();
 
     const handleSubmit = event =>{
         event.preventDefault();
@@ -27,7 +26,7 @@ export default function Login(){
         } else {
             // store the token
             localStorage.setItem("token", res.token)
-            history.goBack() //redirect to previous page on successful login
+            setErrorMessage("You have successfully logged in")
         }
     })}
   
@@ -43,6 +42,7 @@ export default function Login(){
                         <Button
                         variant="contained"
                         type="submit"
+                        id="login-button"
                         style={{marginTop: "15px", marginLeft: "24.8px"}}
                         color="primary">Login</Button>
                     </form>
