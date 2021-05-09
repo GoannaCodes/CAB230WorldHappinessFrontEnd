@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from "react-router-dom";
 import {Button} from "@material-ui/core";
 
+
 const Navbar = () =>{
     return(
         <header>
@@ -9,7 +10,7 @@ const Navbar = () =>{
                 {/* main endpoints */}
                 <ul>
                     <li id="logo">
-                        <Link to="/home"><img src="icons/happy-logo-full.png" alt="Home-logo"></img></Link>
+                        <Link to="/"><img src="icons/happy-logo-full.png" alt="Home-logo"></img></Link>
                     </li>
                     <li>
                         <Link to="/rankings" className="NavItems">Rankings</Link>
@@ -21,10 +22,10 @@ const Navbar = () =>{
 
                 {/* Authentication endpoints */}
                 <Link to={"/register"}>
-                    <Button variant="contained" color="primary"id="registerButton">Register</Button>
+                    <Button variant="contained" id="registerNav">Register</Button>
                 </Link>
                 <Link to={"/login"}>
-                    <Button variant="contained" id="loginButton">Login</Button>
+                    <Button variant="contained" id="loginNav">Login</Button>
                 </Link>
                 <Link to={"/logout"}>
                     <Button variant="contained" color="secondary" id="logoutButton">Logout</Button>
