@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
-import {CountrySelection, yearOptions} from "./Records";
+import {yearOptions} from "./Records";
 import {Grid, Select, MenuItem} from "@material-ui/core";
 import {AgGridReact} from "ag-grid-react";
 
@@ -29,22 +29,17 @@ const columns = [
 
 function AuthenticatedContent(props){
     const[selectedYear, setSelectedYear] = useState("2015");
-    const [selectedCountry, setSelectedCountry] = useState("");
-    // const [message, setMessage] = useState("");
     const [rowData, setRowData] = useState([]);
-//    const history = useHistory();
 
     useEffect(()=>{
         token = localStorage.getItem("token");
-        fetch(`http://131.181.190.87:3000/factors/${selectedYear}?limit=15&country=${selectedCountry}`, {headers:{
+        fetch(`http://131.181.190.87:3000/factors/${selectedYear}?limit=15`, {headers:{
             Accept: "application/json",
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`
         }
-           
         })
         .then(res => res.json())
-        // .then(res => setMessage(res.message))
         .then((data)=>data.map(records=>{
             return{
                 rank: records.rank,
@@ -64,9 +59,9 @@ function AuthenticatedContent(props){
     return(
         <div className="content">
             <h1>Factors</h1>
-            <p></p>
+            <p>Below are the country ratings with their assosciated happiness-related factor scores.</p>
             <Grid align="center" style={{display: "flex", justifyContent: "center"}}>
-                <CountrySelection onInputChange={setSelectedCountry}/>
+                <p>Currently showing happiness factors for: </p>
                 <Select
                     value= {selectedYear}
                     label="Year"
@@ -81,8 +76,6 @@ function AuthenticatedContent(props){
                 </Select>
                
             </Grid>
-            <p>Currently showing happiness factors for {selectedYear}</p>
-                {/* <p>{message}</p> */}
             <div className="ag-theme-balham" style={tableStyles}>
                 <AgGridReact 
                     columnDefs={columns}
