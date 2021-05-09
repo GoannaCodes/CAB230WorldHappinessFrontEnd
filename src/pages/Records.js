@@ -11,15 +11,15 @@ const columns = [
     {headerName: "Rank", field: "rank"}, 
     {headerName: "Country", field: "country"}, 
     {headerName: "Score", field: "score"}, 
-    {headerName: "Year", field: "year"}
+    {headerName: "Year", field: "year", filter: "agNumberColumnFilter"}
 ]
 
 const tableStyles = {
     height:"635px",
-    width: "700px",
-    paddingLeft: "31%", 
+    width: "820px",
+    paddingLeft: "28%", 
     marginTop: "15px",
-    marginBottom: "20px"
+    marginBottom: "50px"
 }
 
 function GetCountryNames(){
@@ -59,7 +59,7 @@ export function YearSelection(props){
     )
 }
 
-export function CountrySelection(props){
+function CountrySelection(props){
     // stores country query
     const [country, setCountry]=useState("");
     const countryList = GetCountryNames();
@@ -83,10 +83,11 @@ export function CountrySelection(props){
     />
     )
 }
+
 export function Records(){
     const [selectedYear, setSelectedYear] = useState("");
     const [selectedCountry, setSelectedCountry] = useState("");
-    const [rowData, setRowData] = useState("");
+    const [rowData, setRowData] = useState([]);
     const [error, setError] = useState("");
     const [hasError, setHasError] = useState("false");
 
@@ -101,28 +102,23 @@ export function Records(){
                 year: records.year
             }
         }))
+        .then(rankings => {
+            setRowData(rankings)
+            setError("")
+        })
         .catch(err=>{
             setHasError(true)
             setError(err.message);
         })
-        .then(rankings => setRowData(rankings))
     })
 
-    // // generate a chart if only selectedCountry has been provided and there is no selectedyear
-    // if (selectedCountry!== "" && (selectedYear === "" || selectedYear === "All"){
-    //     <Line 
-    //         data ={{
-    //             labels: 
-    //         }}
-    //     />
-    // }
     return(
         <div>
             <div className="content">
                     <h1>Ranking Records</h1>
                     <p>The table below displays the world happiness rankings from 2015 - 2020.</p>
                     <p>Feel free to filter the results by year and/or country using the text fields: </p>
-                    {hasError && <div>{error}</div>}
+                    {hasError && <div style={{color: "red", fontWeight: "bold"}}>{error}</div>}
                 <Grid align="center" style={{display:"flex", justifyContent: "center"}}>
                     
                     {/* Tested typing in "2014" and "2021" = table shows no data to display */}
