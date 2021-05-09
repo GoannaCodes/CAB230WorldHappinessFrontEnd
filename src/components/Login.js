@@ -2,11 +2,18 @@ import React, {useState} from "react";
 import {Email, Password, paperStyle} from "./Register";
 import {Link, useHistory} from "react-router-dom";
 import {Paper, Grid, Button} from "@material-ui/core";
+import {errorMessageStyle} from "../pages/Records";
 
+export const successStyle={
+    color: "green",
+    marginTop: "10px",
+    fontWeight: "bold"
+}
 export default function Login(){
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
-    const [errorMessage, setErrorMessage] = useState("");
+    const [message, setMessage] = useState("");
+    const [hasError, setHasError] = useState(false);
 
     const handleSubmit = event =>{
         event.preventDefault();
@@ -22,11 +29,13 @@ export default function Login(){
     .then(res => {
         // if there is an error message, store it
         if (res.message){
-            setErrorMessage(res.message)
+            setHasError(true)
+            setMessage(res.message)
         } else {
+            setHasError(false)
             // store the token
             localStorage.setItem("token", res.token)
-            setErrorMessage("You have successfully logged in")
+            setMessage("You have successfully logged in")
         }
     })}
   
@@ -46,7 +55,9 @@ export default function Login(){
                         style={{marginTop: "15px", marginLeft: "24.8px"}}
                         color="primary">Login</Button>
                     </form>
-                    <p>{errorMessage}</p>
+                    {hasError && <div style={errorMessageStyle}>{message}</div>}
+                    {/* Should only show successful login message */}
+                    {!hasError && <div style={successStyle}>{message}</div>}
                 </Grid>
             </Paper>
             <Paper elevation={10} style={paperStyle}>

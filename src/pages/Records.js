@@ -22,6 +22,12 @@ const tableStyles = {
     marginBottom: "50px"
 }
 
+export const errorMessageStyle={
+    marginTop: "10px",
+    color: "red",
+    fontWeight: "bold"
+}
+
 function GetCountryNames(){
     const [countryList, setCountryList] = useState([]);
     useEffect(()=>{
@@ -118,7 +124,7 @@ export function Records(){
                     <h1>Ranking Records</h1>
                     <p>The table below displays the world happiness rankings from 2015 - 2020.</p>
                     <p>Feel free to filter the results by year and/or country using the text fields: </p>
-                    {hasError && <div style={{color: "red", fontWeight: "bold"}}>{error}</div>}
+                    {hasError && <div style={errorMessageStyle}>{error}</div>}
                 <Grid align="center" style={{display:"flex", justifyContent: "center"}}>
                     
                     {/* Tested typing in "2014" and "2021" = table shows no data to display */}

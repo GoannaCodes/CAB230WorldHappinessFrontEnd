@@ -1,7 +1,8 @@
 import React, {useState} from "react";
 import {Grid, Paper, Button, TextField} from "@material-ui/core";
 import {Link} from "react-router-dom";
-
+import {errorMessageStyle} from "../pages/Records"
+import {successStyle} from "./Login";
 export const paperStyle={
     padding: "20px 30px",
     width: "300px",
@@ -44,6 +45,7 @@ export function Register(){
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
     const [message, setMessage] = useState("");
+    const [hasError, setHasError] = useState(false);
     const handleSubmit = event =>{
         event.preventDefault();
 
@@ -56,8 +58,16 @@ export function Register(){
             body: JSON.stringify({email: `${email}`, password: `${pass}`})
         })
         .then(res=> res.json())
-        // obtain response message
-        .then(res => setMessage(res.message))
+        .then(res => {
+            // check if there was an error
+            if (res.error){
+                setHasError(true)
+            } else{
+                setHasError(false)
+            }
+            // obtain response message
+            setMessage(res.message)
+        })
     }
     return(
         <Grid>
@@ -74,7 +84,9 @@ export function Register(){
                         style={{marginTop: "15px" }}
                         >Create an account</Button>
                         {/* Display response message to user */}
-                        <p>{message}</p>
+                        {hasError && <div style={errorMessageStyle}>{message}</div>}
+                        {/* Should only show successful login message */}
+                        {!hasError && <div style={successStyle}>{message}</div>}
                     </form>
                 </Grid>
             </Paper>
